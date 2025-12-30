@@ -21,8 +21,14 @@ const serverOnError = err => {
         throw new ApolloError('Internal Server Error. Please comeback later.', 500)
 }
 
-Apollo.applyMiddleware({ app, path: '/graphql' })
-
+Apollo.applyMiddleware({ 
+  app, 
+  path: '/graphql',
+  cors: { // <--- Tambahin object cors ini
+    origin: "*", // Ini artinya: "Buka pintu buat SIAPA AJA"
+    credentials: true 
+  }
+})
 app.get('*', (req, res) => {
     res.sendFile(`${__dirname}/public/index.html`)
 })
